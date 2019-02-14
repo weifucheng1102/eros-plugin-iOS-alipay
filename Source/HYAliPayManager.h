@@ -12,6 +12,8 @@
 
 + (void)payWithOrderInfo:(NSString *)orderInfo fromScheme:(NSString *)scheme callback:(WXModuleCallback)callback;
 
++ (void)authWithInfo:(NSString *)info fromScheme:(NSString *)scheme callback:(WXModuleCallback)callback;
+
 + (BOOL)handlerOpenURL:(NSURL *)url;
 
 @end

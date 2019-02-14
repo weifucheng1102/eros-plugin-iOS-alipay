@@ -41,6 +41,24 @@
     }];
 }
 
+- (void)_authWithInfo:(NSString *)info fromScheme:(NSString *)scheme callback:(WXModuleCallback)callback {
+    self.callback = callback;
+    [[AlipaySDK defaultService] auth_V2WithInfo:info fromScheme:scheme callback:^(NSDictionary *resultDic) {
+        if (callback) {
+            callback(@{
+                       @"status": resultDic[@"resultStatus"],
+                       @"errorMsg": resultDic[@"memo"],
+                       @"data": resultDic[@"result"]
+                       });
+        }
+    }];
+}
+
++ (void)authWithInfo:(NSString *)info fromScheme:(NSString *)scheme callback:(WXModuleCallback)callback
+{
+    [[HYAliPayManager shareInstance] _authWithInfo:info fromScheme:scheme callback:callback];
+}
+
 + (void)payWithOrderInfo:(NSString *)orderInfo fromScheme:(NSString *)scheme callback:(WXModuleCallback)callback
 {
     [[HYAliPayManager shareInstance] _payWithOrderInfo:orderInfo fromScheme:scheme callback:callback];

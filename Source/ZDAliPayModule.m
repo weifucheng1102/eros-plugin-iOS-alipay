@@ -15,6 +15,7 @@ WX_PlUGIN_EXPORT_MODULE(bmAliPay, ZDAliPayModule)
 @implementation ZDAliPayModule
 
 WX_EXPORT_METHOD(@selector(pay:callback:))
+WX_EXPORT_METHOD(@selector(auth:callback:))
 
 /**
  支付宝支付
@@ -34,5 +35,14 @@ WX_EXPORT_METHOD(@selector(pay:callback:))
     [HYAliPayManager payWithOrderInfo:orderString fromScheme:scheme callback:callback];
 }
 
-@end
+- (void)auth:(NSDictionary *) params callback:(WXModuleCallback)callback {
+    NSString *authString = [params objectForKey:@"authInfo"];
+    
+    NSString *scheme = [params objectForKey:@"scheme"];
+    if (!scheme) {
+        scheme = kAliPayScheme;
+    }
+    [HYAliPayManager authWithInfo:authString fromScheme:scheme callback:callback];
+}
 
+@end
